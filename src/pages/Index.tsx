@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useRef } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
@@ -15,34 +16,35 @@ import WorkFlowComponent from "@/components/WorkFlowComponent";
 import Footer from "@/components/Footer";
 import VideoScrollScaler from "@/components/VideoScrollScaler";
 import VideoSection from '@/components/VideoSection';
-
+import HeroBanner from '@/components/HeroBanner';
+import Lenis from '@studio-freight/lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
 const Index = () => {
-const scrollRef = useRef(null);
-  useEffect(() => {
-    
-    // Note: Individual components now handle their own animations
-    // No need to call external animations that conflict with component-level GSAP
-  },[]);
+
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <Header/>
+     {/* <HeroBanner/> */}
+     {/* <HeroSection/> */}
       <VideoSection/>
+     
       {/* <HeroSection  /> */}
-      
+   
       <FeaturesSection />
+     
       {/* <AboutSection/> */}
        <EnrzyAboutSection />
+       
       <CounterSection />
       <WhyEnrzySection />
       <IndustriesSection />
       <WorkFlowComponent />
       <Footer />
-    </div>
+    </>
   );
 };
 

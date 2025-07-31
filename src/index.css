@@ -121,3 +121,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Locomotive Scroll Custom Styles */
+[data-scroll-container] {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar for locomotive scroll */
+.c-scrollbar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  transition: opacity 0.3s;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: hsl(var(--primary));
+  opacity: 0.6;
+  width: 6px;
+  border-radius: 10px;
+  margin: 0 1px;
+  cursor: pointer;
+}
+
+.has-scroll-scrolling .c-scrollbar {
+  opacity: 1;
+}
+
+/* Ensure smooth scrolling without breaking animations */
+html.has-scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Locomotive scroll smooth scrolling enhancement */
+.locomotive-scroll-container {
+  scroll-behavior: smooth;
+}
