@@ -107,7 +107,7 @@ const CounterSection = () => {
   };
 
   return (
-    <div ref={sectionRef} className="counter-section-bg overflow-hidden">
+    <div data-lag=".8" ref={sectionRef} className="counter-section-bg overflow-hidden">
       <div className="overlay">
       <div className="w-full counter-grid mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">

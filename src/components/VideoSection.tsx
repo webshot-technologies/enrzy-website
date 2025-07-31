@@ -94,7 +94,7 @@ const VideoSection = () => {
   }, [isMobile]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden flex">
+    <div data-lag="1" className="relative min-h-screen overflow-hidden flex">
       {/* Background Video - Only render on desktop */}
       {!isMobile && (
         <video

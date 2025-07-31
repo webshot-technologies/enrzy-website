@@ -1,0 +1,171 @@
+.home-banner-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.home-banner {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.video-scroll-section {
+  position: relative;
+  z-index: 2;
+}
+
+.video-wrapper {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-txt {
+  max-width: 650px;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-head {
+  font-size: 72px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.banner-head span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.comm-txt {
+  font-size: 18px;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 40px;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.button span {
+  position: relative;
+  z-index: 2;
+}
+
+.white-bg-home {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.white-bg-home img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.banner-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-video video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* Hide mobile video by default on desktop */
+.mobile-video {
+  display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 990px) {
+  .banner-head {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-head {
+    font-size: 42px;
+  }
+  
+  .banner-head span {
+    font-size: 20px;
+  }
+  
+  .home-banner {
+    min-height: 80vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-head {
+    font-size: 32px;
+  }
+  
+  .banner-head span {
+    font-size: 16px;
+  }
+  
+  .comm-txt {
+    font-size: 16px;
+  }
+  
+  /* Show mobile video and hide desktop video on mobile */
+  .desktop-video {
+    display: none;
+  }
+  
+  .mobile-video {
+    display: block;
+  }
+}
