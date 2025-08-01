@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from '@studio-freight/lenis';
-import '../HeroSection.css';
+import '../HeroSection.css'; // Assuming this CSS file contains the necessary styles
 
+// Register GSAP plugins globally once
+gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection: React.FC = () => {
   const mainScrollRef = useRef<HTMLDivElement>(null);
@@ -13,142 +15,133 @@ const HeroSection: React.FC = () => {
   const videoMobileRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    // Basic guard clause for server-side rendering
     if (typeof window === "undefined") return;
-
+    
     // --- LENIS SMOOTH SCROLL INTEGRATION ---
     const lenis = new Lenis({
-      duration: 1,
+      duration: 1.2, // Slightly longer duration for a more luxurious feel
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
+      mouseMultiplier: 0.8, // Slightly reduced mouse sensitivity
+      smoothTouch: true, // Smooth scrolling on touch devices
       touchMultiplier: 2,
     });
+    
+    // Connect Lenis to GSAP's ticker for seamless integration
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
 
-    // --- GSAP SETUP & ANIMATIONS ---
-    gsap.registerPlugin(ScrollTrigger);
-    
+    // --- GSAP ANIMATIONS ---
+
+    // Set GSAP defaults for consistent easing
     gsap.defaults({
       ease: "power2.inOut",
     });
 
     // Initial load-in animation for the text
-    gsap.fromTo(
+    const initialTextLoad = gsap.fromTo(
       bannerTextRef.current,
       { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.5 }
+      { y: 0, opacity: 1, duration: 1.5, delay: 0.5 } // Added a small delay for better user experience
     );
 
-    // --- UPDATED SCROLL-TRIGGERED TIMELINE FOR PINNING ---
-    
+    // Main scroll-triggered timeline
     const introTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: mainScrollRef.current,
-        start: "top top", // The animation starts when the top of the section hits the top of the viewport
-        end: "+=100", // <-- CRITICAL CHANGE: The animation now completes over 500px of scrolling.
+        start: "top top",
+        end: "bottom+=1000", // Increased the scroll distance for a longer, more impactful animation
         scrub: true,
         pin: true,
-        pinSpacing: false,
+        pinSpacing: true, // Re-enabled pinSpacing for a smoother transition to the next section
         anticipatePin: 1,
-        // Optional: onUpdate callback to debug progress.
-        // onUpdate: self => console.log("progress:", self.progress.toFixed(3))
       }
     });
 
     introTimeline
+      // Phase 1: Text Fade Out (occurs first)
       .to(bannerTextRef.current, {
         y: -100,
         autoAlpha: 0,
-        duration: 4,
+        duration: 1, // A relative duration for the text fade
       })
+      // Phase 2: White Background Zoom Out and Fade (after the text is gone)
       .to(whiteBgRef.current, {
         scale: 20,
         autoAlpha: 0,
-        duration: 5,
-      }, "<")
-      // We can remove the empty tween `.to({}, { duration: 1 })`
-      // since the animation will be completed within the 500px scroll range.
+        duration: 2, // A longer relative duration for the dramatic zoom-out
+      }, ">") // ">" means this tween starts immediately after the previous one finishes
+      // Phase 3: Video Fade In (happens alongside the background zoom-out)
+      .to(videoDesktopRef.current, {
+        opacity: 1,
+        duration: 1,
+      }, "<0.5") // Starts slightly after the white background animation begins
+      .to(videoMobileRef.current, {
+        opacity: 1,
+        duration: 1,
+      }, "<0.5")
+      // Phase 4: A "hold" to keep the pinned section visible for a while before unpinning
+      .to({}, { duration: 1 }); // An empty tween to add a pause in the timeline
 
-    // --- VIDEO PLAYBACK TRIGGER ---
-    // This trigger is fine as it is. It will start the video once the intro
-    // animation is complete and the pin is released.
+    // --- VIDEO PLAYBACK TRIGGER (Corrected) ---
+    // This trigger now handles the play/pause logic without the autoplay attribute
     ScrollTrigger.create({
       trigger: mainScrollRef.current,
-      start: "bottom center",
-      toggleActions: "play none none reverse",
+      start: "top top", // The video starts playing immediately on pin
+      end: "bottom bottom",
+      toggleActions: "play none none reverse", // play on enter, reverse (pause) on leave back
       onEnter: () => {
-        if (window.innerWidth > 991) {
-          videoDesktopRef.current?.play();
-        } else {
-          videoMobileRef.current?.play();
+        const video = window.innerWidth > 991 ? videoDesktopRef.current : videoMobileRef.current;
+        if (video) {
+          video.play();
+          video.style.opacity = '1'; // Ensure the video is visible after playing
         }
       },
       onLeaveBack: () => {
-        if (window.innerWidth > 991) {
-          videoDesktopRef.current?.pause();
-        } else {
-          videoMobileRef.current?.pause();
+        const video = window.innerWidth > 991 ? videoDesktopRef.current : videoMobileRef.current;
+        if (video) {
+           video.play();
+          // video.currentTime = 0; // Reset video to the beginning
         }
       },
+      onEnterBack: () => {
+        const video = window.innerWidth > 991 ? videoDesktopRef.current : videoMobileRef.current;
+        if (video) {
+          video.play();
+        }
+      }
     });
-
+    
     // --- CLEANUP FUNCTION ---
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       lenis.destroy();
+       
     };
   }, []);
 
   return (
-    // ... (rest of the component JSX is unchanged)
     <div ref={mainScrollRef} className="relative w-full" id="main-scrollbar">
       <div className="home-container">
         <div className="home-banner-wrap">
           <div className="home-banner">
             <div className="container">
               <div ref={bannerTextRef} className="banner-txt">
-                <h1 className="banner-head text-black">
-                  <span className="block text-yellow-400">
-                    Integrated Drone Solutions
-                  </span>
-                  Enabling Large-Scale Impact
-                </h1>
-                <p className="comm-txt text-black">
-                  Enhancing Productivity, People, And Planet
-                </p>
-                <a
-                  href="https://aereo.io/solutions/"
-                  target="_self"
-                  className="button text-black"
-                >
-                  Explore<span className="ml-2">→</span>
-                </a>
+               
               </div>
             </div>
 
             <picture ref={whiteBgRef} className="white-bg-home">
-              <source
-                media="(max-width:400px)"
-                srcSet="https://aereo.io/wp-content/themes/Aereo/assets/img/mob-white-bg.png"
-              />
-              <source
-                media="(max-width:480px)"
-                srcSet="https://aereo.io/wp-content/themes/Aereo/assets/img/big-mob-white-bg.png"
-              />
-              <source
-                media="(max-width:990px)"
-                srcSet="https://aereo.io/wp-content/themes/Aereo/assets/img/tab-white-bg.png"
-              />
+              <source media="(max-width:990px)" srcSet="/assets/bg-transparent.png" />
               <img
-                alt=""
-                src="https://aereo.io/wp-content/themes/Aereo/assets/img/home-white-bg.svg"
+                alt="Background image for hero section"
+                src="/assets/bg-transparent.png"
                 className="w-full"
               />
             </picture>
@@ -157,11 +150,12 @@ const HeroSection: React.FC = () => {
               <div className="banner-video">
                 <video
                   ref={videoDesktopRef}
-                  autoPlay
                   loop
                   muted
                   playsInline
+                  autoPlay
                   preload="auto"
+                  style={{ opacity: 0 }} // Initially hidden
                 >
                   <source src="/assets/enrzy.mp4" type="video/webm" />
                 </video>
@@ -169,11 +163,12 @@ const HeroSection: React.FC = () => {
               <div className="banner-video">
                 <video
                   ref={videoMobileRef}
-                  autoPlay
                   loop
                   muted
                   playsInline
+                  autoPlay
                   preload="auto"
+                  style={{ opacity: 0 }} // Initially hidden
                 >
                   <source src="/assets/enrzy.mp4" type="video/mp4" />
                 </video>
@@ -182,9 +177,6 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* <div style={{ height: "100vh", background: "lightgray" }}>
-        <FeaturesSection />
-      </div> */}
     </div>
   );
 };

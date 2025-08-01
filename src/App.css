@@ -1,3 +1,13 @@
+/* Reset and smooth scroll setup */
+html {
+  scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
 #root {
   /* max-width: 1280px; */
   margin: 0 auto;
@@ -211,6 +221,10 @@ footer{
   backdrop-filter: blur(10px);
   background: url('/assets/footerbg.png') no-repeat bottom center/cover;
 }
+.video-scroll-section{
+  background: url('/assets/bg-transparent.png') no-repeat bottom center/cover !important;
+
+  }
 footer::before{
   content: '';
   position: absolute;

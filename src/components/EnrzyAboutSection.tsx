@@ -94,7 +94,7 @@ const EnrzyAboutSection: React.FC = () => {
   }, []);
 
   return (
-    <section data-lag=".8" className="counter-grid  bg-white">
+    <section data-lag=".8" className="counter-grid  ">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
         {/* Left Content */}
         <div className='order-2 md:order-1'>

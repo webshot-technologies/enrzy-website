@@ -386,7 +386,7 @@ if (mobileTimeline) {
   }, [steps]);
 
   return (
-    <div ref={containerRef} className="workflow-container section-padding px-4 sm:px-6 lg:px-8 bg-gray-50 min-h-screen">
+    <div ref={containerRef} className="workflow-container section-padding px-4 sm:px-6 lg:px-8  min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">

@@ -29,11 +29,11 @@ const Index = () => {
     <>
       <Header/>
      {/* <HeroBanner/> */}
-     {/* <HeroSection/> */}
       <VideoSection/>
      
+     <HeroSection/>
       {/* <HeroSection  /> */}
-   
+   {/* <VideoScrollScaler/> */}
       <FeaturesSection />
      
       {/* <AboutSection/> */}
