@@ -28,12 +28,11 @@ const Index = () => {
   return (
     <>
       <Header/>
-     {/* <HeroBanner/> */}
-     {/* <HeroSection/> */}
-      <VideoSection/>
-     
+     <HeroBanner/>
+      {/* <VideoSection/> */}
+     {/* <VideoSection /> */}
       {/* <HeroSection  /> */}
-   
+   {/* <VideoScrollScaler/> */}
       <FeaturesSection />
      
       {/* <AboutSection/> */}

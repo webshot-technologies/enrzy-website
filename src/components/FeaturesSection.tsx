@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import '../App.css';
 
-
 // Register the ScrollTrigger plugin with GSAP
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
 // Dummy data for features (replace with your actual data)
 const featuresData = [
@@ -37,27 +35,12 @@ const featuresData = [
 ];
 
 const FeaturesSection: React.FC = () => {
-  // const sectionRef = useRef<HTMLDivElement>(null);
-  // const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-   const sectionRef = useRef(null);
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
   const cardsRef = useRef([]);
-  const smootherRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Set initial hidden state for cards (moved from bottom and transparent)
-       // Initialize ScrollSmoother for this section
-      // smootherRef.current = ScrollSmoother.create({
-      //   wrapper: containerRef.current,
-      //   content: sectionRef.current,
-      //   smooth: 2, // Smoothness factor (higher = smoother but potentially laggy)
-      //   effects: true, // Enable data-speed and data-lag attributes
-      //   smoothTouch: 0.1, // Smooth scrolling on touch devices (0.1 = subtle)
-      //   normalizeScroll: true, // Normalize scroll across different browsers
-      //   ignoreMobileResize: true, // Ignore mobile resize events
-      // });
-
       gsap.set(cardsRef.current, {
         y: 80, // Start 80px below their final position
         opacity: 0, // Start fully transparent
@@ -90,7 +73,7 @@ const FeaturesSection: React.FC = () => {
   }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (
-    <section  ref={sectionRef} className="box-move-top py-0  min-h-screen flex items-center   font-inter ">
+    <section  ref={sectionRef} className="box-move-top py-0  min-h-screen flex items-center   ">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
 

@@ -8,14 +8,18 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { gsap } from "gsap";
 import { useLenisScroll } from './hooks/useLenisScroll';
+import { ReactLenis } from '@studio-freight/react-lenis';
+import HeroSection from './components/HeroSection';
+
 
 const queryClient = new QueryClient();
 
 const App = () => {
   // Initialize Lenis smooth scroll
-  useLenisScroll();
+  // useLenisScroll();
   
   return (
+    //  <ReactLenis root>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -29,6 +33,7 @@ const App = () => {
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
+    // </ReactLenis>
   );
 };
 

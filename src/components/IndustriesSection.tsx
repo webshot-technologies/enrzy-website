@@ -44,7 +44,7 @@ export default function IndustriesSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: "top 100%",
           end: "bottom 20%",
           toggleActions: "play none play reset",
           markers: false
@@ -65,7 +65,7 @@ export default function IndustriesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding min-h-screen bg-gray-50">
+    <section ref={sectionRef} className="section-padding min-h-screen ">
       <div className="max-w-6xl mx-auto px-4"> 
         <div className="text-center mb-20 ">
            <div className="header-element inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-orange-100 base-color mb-4">

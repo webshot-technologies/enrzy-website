@@ -4,124 +4,130 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VideoScrollScaler: React.FC = () => {
+const VideoBackgroundTransition: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoWrapperRef = useRef<HTMLDivElement>(null);
-  const videoBoxRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const bgImageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!containerRef.current || !videoWrapperRef.current || !bgImageRef.current) {
+      console.warn("Refs not available, animation setup skipped.");
+      return;
+    }
+
+    const container = containerRef.current;
     const videoWrapper = videoWrapperRef.current;
-    const videoBox = videoBoxRef.current;
-    const video = videoRef.current;
-    const heroVideoBox = document.getElementById('hero-video-box');
+    const bgImage = bgImageRef.current;
 
-    if (!videoWrapper || !videoBox || !heroVideoBox || !video) return;
+    const mm = gsap.matchMedia();
 
-    const ctx = gsap.context(() => {
-      const wrapperRect = videoWrapper.getBoundingClientRect();
-      const heroRect = heroVideoBox.getBoundingClientRect();
+    mm.add("all", () => {
+      // Set initial states
+      gsap.set(videoWrapper, { opacity: 0.2, willChange: 'opacity' });
+      gsap.set(bgImage, { scale: 1, opacity: 1, willChange: 'transform, opacity' });
+      
+      // Define a total scroll length for the pinned section
+      // This is a fixed value, which is great for control.
+      const totalScrollLength = "2500"; // Can be adjusted
 
-      // Set initial style for videoBox - ensure it's positioned absolutely without initial CSS transform: translate
-      gsap.set(videoBox, {
-        width: heroRect.width,
-        height: heroRect.height,
-        x: heroRect.left - wrapperRect.left, // Position relative to wrapper's top-left
-        y: heroRect.top - wrapperRect.top,
-        borderRadius: "8px",
-        scale: 1,
-        transformOrigin: "center center",
-        position: 'absolute'
-      });
-
-      // Initially set the background of the videoWrapper to transparent
-      // We will animate it to black during the scroll.
-      gsap.set(videoWrapper, { backgroundColor: 'rgba(0,0,0,0)' }); // Start transparent
-
-      // Fade hero box + scale our new one during scroll
-      ScrollTrigger.create({
-        trigger: heroVideoBox.closest('.hero-section') || heroVideoBox,
-        start: "bottom center",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: ({ progress }) => {
-          heroVideoBox.style.opacity = String(1 - progress);
-          gsap.set(videoBox, {
-            scale: 1 + progress * 0.2,
-            transformOrigin: "center center"
-          });
-        },
-        onLeave: () => {
-          heroVideoBox.style.opacity = '0';
-        }
-      });
-
-      // Transition from small box to full section
-      const mainTl = gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: videoWrapper,
-          start: "top top",
-          end: "+=200%", // Adjust this value to control scroll duration of the transition
-          scrub: true,
+          trigger: container,
+          start: 'top top',
+          end: `+=${totalScrollLength}`, // The entire pin duration
+          scrub: 1,
           pin: true,
           pinSpacing: true,
-          onEnter: () => {
-            heroVideoBox.style.opacity = '0';
-            video.play().catch(() => {});
-          },
-          onLeaveBack: () => {
-            video.pause();
-            video.currentTime = 0;
-          }
+          anticipatePin: 1,
+        },
+      });
+
+      // The key change is using a timeline with explicit durations
+      // and defining a "dead space" tween to hold the animation.
+      tl
+        // Phase 1: The Transition (A shorter duration)
+        .to(bgImage, {
+          scale: 1.5,
+          opacity: 0,
+          ease: 'power2.inOut',
+          duration: 1, // This is a relative duration within the timeline
+        })
+        .to(videoWrapper, {
+          opacity: 1,
+          ease: 'power2.inOut',
+          duration: 1,
+        }, 0) // Starts at the same time as the bgImage animation
+
+        // Phase 2: The Hold (A longer duration)
+        // This is an "empty" tween that holds the state
+        // The total scroll length is 2500. The animation takes up a duration of 1.
+        // We'll add another tween with a duration of 4 to hold the state.
+        .to({}, { // Empty tween
+          duration: 4, // This duration holds the animation state for a longer scroll
+        });
+      
+      // We can also add a subtle parallax to the video to create more depth
+      gsap.to(videoWrapper, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: `+=${totalScrollLength}`,
+          scrub: 1,
         }
-      });
+      })
 
-      mainTl.to(videoBox, {
-        width: "100%",
-        height: "100%",
-        x: 0,
-        y: 0,
-        scale: 1,
-        borderRadius: 0,
-        ease: "power2.inOut",
-        duration: 1 // Duration for this segment of the scrubbed timeline
-      });
+    });
 
-      // Animate the background of the videoWrapper from transparent to black
-      mainTl.to(videoWrapper, {
-        backgroundColor: 'rgba(0,0,0,1)', // End black
-        ease: "power1.in", // Smooth in
-        duration: 0.5 // Start fading in slightly later or quicker
-      }, "<0.2"); // Start this background animation slightly after the videoBox starts expanding
-
-    }, videoWrapperRef);
-
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
-    <section
-      ref={videoWrapperRef}
-      id="video-section-scaler"
-      // REMOVE bg-black from here. GSAP will manage the background color.
-      className="video-scroll-section relative flex justify-center items-center min-h-screen overflow-hidden"
-      style={{ zIndex: 10 }} // Keep zIndex
-    >
-      <div
-        ref={videoBoxRef}
-        className="absolute shadow-2xl overflow-hidden"
-        // Ensure no transform: translate in initial CSS style here
+    <div className="font-inter text-white relative">
+      <section
+        ref={containerRef}
+        className="relative flex justify-center items-center h-screen overflow-hidden"
+        style={{ zIndex: 10 }}
       >
-        <video
-          ref={videoRef}
-          src="/assets/enrzy.mp4"
-          muted
-          playsInline
-          loop
-          className="w-full h-full object-cover"
+        <div
+          ref={bgImageRef}
+          className="absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none"
+          style={{
+            backgroundImage: "url('/assets/bg-transparent.png')",
+            zIndex: 10,
+          }}
         />
+        <div
+          ref={videoWrapperRef}
+          className="absolute inset-0 overflow-hidden"
+          style={{
+            zIndex: 5,
+          }}
+        >
+          <video
+            src="/assets/enrzy.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+        </div>
+
+        <div className="relative text-center z-20">
+          <h1 className="text-5xl md:text-8xl font-bold">Your Headline</h1>
+          <p className="mt-4 text-lg md:text-2xl text-white/70">A caption to set the mood.</p>
+        </div>
+      </section>
+      
+      {/* Some content below to show the scroll effect */}
+      <div className="h-[150vh] bg-neutral-900 flex justify-center items-center">
+        <h2 className="text-3xl text-neutral-500">More Content Below</h2>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default VideoScrollScaler;
+export default VideoBackgroundTransition;

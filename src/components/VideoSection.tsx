@@ -67,24 +67,7 @@ const VideoSection = () => {
   };
 
   // Scroll effect - only on desktop
-  useEffect(() => {
-    if (isMobile) return;
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const scrolledPastThreshold = scrollY > 50;
-      const newScrolledState = scrolledPastThreshold && !isScrolled;
-      const newUnscrolledState = !scrolledPastThreshold && isScrolled;
-
-      if (newScrolledState || newUnscrolledState) {
-        setIsScrolled(scrolledPastThreshold);
-        handleVideoPlayback(scrolledPastThreshold);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isScrolled, isMobile]);
+  
 
   // Auto-play on mobile if needed
   useEffect(() => {
@@ -94,9 +77,10 @@ const VideoSection = () => {
   }, [isMobile]);
 
   return (
-    <div data-lag="1" className="relative min-h-screen overflow-hidden flex">
+    <div className="relative h-screen border-2 border-red-700  bg-black  overflow-hidden flex">
+      
       {/* Background Video - Only render on desktop */}
-      {!isMobile && (
+      {/* {!isMobile && (
         <video
           ref={backgroundVideoRef}
           src='assets/enrzy.mp4'
@@ -107,7 +91,7 @@ const VideoSection = () => {
           loop
           playsInline
         />
-      )}
+      )} */}
 
       {/* Dark Overlay - Only show on desktop when scrolled */}
       {!isMobile && (
@@ -119,48 +103,31 @@ const VideoSection = () => {
       {/* Content Container */}
       <div 
         ref={heroContentRef}
-        className={`relative z-10 h-full w-full  flex flex-col items-center justify-between px-4 ${
+        className={` z-10  w-full  flex  items-center justify-between px-4 ${
           !isMobile ? 'transition-all duration-[1500ms] ease-out' : ''
         } ${
           isScrolled && !isMobile ? 'opacity-0 transform translate-y-[-30px] scale-95' : ''
         }`}
-      >
+       style={{backgroundImage: "url('/assets/bg-background.png')"}}>
         {/* Main Content */}
-        <div className="text-center max-w-4xl mx-auto mt-6">
-          <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold leading-tight">
+        <div className="text-center banner-content  max-w-4xl mx-auto -mt-10 ">
+          <h1 className="text-4xl banner-header md:text-8xl lg:text-8xl font-bold leading-tight">
             <span className="hero-title-line block">Revolutionize</span>
-            <span className="hero-title-line block text-gray-400">
-              Power <span className=""> Prospects</span>
+            <span className="hero-title-line block base-color">
+              Power <span className=" base-color"> Prospects</span>
             </span>
-            <span className="hero-title-line block">
-              Asset <span className="text-gray-400">Management</span>
+            <span className="hero-title-line block ">
+              Asset <span className="base-color">Management</span>
             </span>
           </h1>
 
-          <p className="hero-subtitle text-base md:text-base mt-6 max-w-2xl mx-auto leading-relaxed mb-6">
+          <p className="hero-subtitle  mt-6 max-w-2xl text-md md:text-xl lg:text-xl  mx-auto leading-relaxed mb-6">
             ENRZY Empowers Utilities To Detect Faults Early, Automate Maintenance, And Visualize Every Asset In 3D — Ensuring Higher Uptime, Lower Risk, And Smarter Decisions.
           </p>
         </div>
 
         {/* Small Video Box */}
-        <div 
-          ref={heroVideoBoxRef}
-          className={`relative mt-4 ${
-            !isMobile ? 'transition-all duration-[1500ms] ease-in-out' : ''
-          } ${
-            isScrolled && !isMobile ? 'opacity-0 transform translate-y-[30px] pointer-events-none' : ''
-          }`}
-        >
-          <video
-            ref={videoRef}
-            src='./assets/enrzy.mp4'
-            className="w-[20rem] h-[12rem] object-cover rounded-lg shadow-2xl"
-            muted
-            loop
-            playsInline
-            autoPlay
-          />
-        </div>
+    
       </div>
     </div>
   );
