@@ -19,23 +19,25 @@ const HeroSection: React.FC = () => {
     if (typeof window === "undefined") return;
     
     // --- LENIS SMOOTH SCROLL INTEGRATION ---
-    const lenis = new Lenis({
-      duration: 1.2, // Slightly longer duration for a more luxurious feel
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 0.8, // Slightly reduced mouse sensitivity
-      smoothTouch: true, // Smooth scrolling on touch devices
-      touchMultiplier: 2,
-    });
+    // const lenis = new Lenis({
+    //   duration: 1, // Slightly longer duration for a more luxurious feel
+    //   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    //   orientation: 'vertical',
+    //   gestureOrientation: 'vertical',
+    //   smoothWheel: true,
+    //    wheelMultiplier: 1,
+    //   touchMultiplier: 2,
+    //    infinite: false,
+    //   autoResize: true,
+      
+    // });
     
-    // Connect Lenis to GSAP's ticker for seamless integration
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
+    // // Connect Lenis to GSAP's ticker for seamless integration
+    // lenis.on('scroll', ScrollTrigger.update);
+    // gsap.ticker.add((time) => {
+    //   lenis.raf(time * 1000);
+    // });
+    // gsap.ticker.lagSmoothing(0);
 
     // --- GSAP ANIMATIONS ---
 
@@ -121,13 +123,13 @@ const HeroSection: React.FC = () => {
     // --- CLEANUP FUNCTION ---
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      lenis.destroy();
+      // lenis.destroy();
        
     };
   }, []);
 
   return (
-    <div ref={mainScrollRef} className="relative w-full" id="main-scrollbar">
+    <div ref={mainScrollRef} className=" h-screen relative w-full" id="main-scrollbar">
       <div className="home-container">
         <div className="home-banner-wrap">
           <div className="home-banner">
@@ -138,10 +140,10 @@ const HeroSection: React.FC = () => {
             </div>
 
             <picture ref={whiteBgRef} className="white-bg-home">
-              <source media="(max-width:990px)" srcSet="/assets/bg-transparent.png" />
+              <source media="(max-width: 992px)" srcSet="/assets/bg-background.png" />
               <img
                 alt="Background image for hero section"
-                src="/assets/bg-transparent.png"
+                src="/assets/bg-background.png"
                 className="w-full"
               />
             </picture>

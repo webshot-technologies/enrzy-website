@@ -85,7 +85,7 @@ const EnrzyAboutSection: React.FC = () => {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: imageRef.current,
-            start: 'top 85%',
+            start: 'top 100%',
              toggleActions: "play none play reset",
           },
         }
@@ -94,7 +94,7 @@ const EnrzyAboutSection: React.FC = () => {
   }, []);
 
   return (
-    <section data-lag=".8" className="counter-grid  ">
+    <section  className="counter-grid overflow-x-hidden  ">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
         {/* Left Content */}
         <div className='order-2 md:order-1'>

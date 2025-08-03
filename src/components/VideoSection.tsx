@@ -77,7 +77,8 @@ const VideoSection = () => {
   }, [isMobile]);
 
   return (
-    <div className="relative h-screen     overflow-hidden flex">
+    <div className="relative h-screen border-2 border-red-700  bg-black  overflow-hidden flex">
+      
       {/* Background Video - Only render on desktop */}
       {/* {!isMobile && (
         <video
@@ -107,16 +108,16 @@ const VideoSection = () => {
         } ${
           isScrolled && !isMobile ? 'opacity-0 transform translate-y-[-30px] scale-95' : ''
         }`}
-      >
+       style={{backgroundImage: "url('/assets/bg-background.png')"}}>
         {/* Main Content */}
-        <div className="text-center  max-w-4xl mx-auto -mt-10 ">
-          <h1 className="text-4xl md:text-8xl lg:text-8xl font-bold leading-tight">
+        <div className="text-center banner-content  max-w-4xl mx-auto -mt-10 ">
+          <h1 className="text-4xl banner-header md:text-8xl lg:text-8xl font-bold leading-tight">
             <span className="hero-title-line block">Revolutionize</span>
-            <span className="hero-title-line block text-gray-400">
-              Power <span className=""> Prospects</span>
+            <span className="hero-title-line block base-color">
+              Power <span className=" base-color"> Prospects</span>
             </span>
-            <span className="hero-title-line block">
-              Asset <span className="text-gray-400">Management</span>
+            <span className="hero-title-line block ">
+              Asset <span className="base-color">Management</span>
             </span>
           </h1>
 

@@ -272,15 +272,24 @@ img.svg-icon{
 .hero-logo img{
  width: 186.54054260253906;
 height: 39.66666793823242;
-
-
 }
-
+.banner-content{
+  margin-top: -30px;
+}
+.banner-content .banner-header{
+  font-size: 43px;
+}
+.bannner-content .banner-para{
+  font-size: 20px;
+  font-weight: 400;
+}
 .box-move-top{
-  margin-top:-100px;
+  margin-top:100px;
   /* margin-top: -200px; */
 }
-
+.banner-content-margin{
+  margin-top: 100px;
+}
 .counter-grid{
   padding: 150px 24px;
 }
@@ -301,3 +310,28 @@ letter-spacing: 0%;
 }
 
 /* ///footer css  */
+/* Ensure smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Modern shadow and transition for video container */
+.hero-video-container {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.hero-video-container:hover {
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2), 0 15px 15px rgba(0,0,0,0.15);
+}
+
+/* Optional: Add a subtle border animation */
+@keyframes borderPulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+.hero-video-container:focus-within {
+  animation: borderPulse 1.5s infinite;
+}

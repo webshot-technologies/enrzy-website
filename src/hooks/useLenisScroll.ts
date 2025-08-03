@@ -13,7 +13,7 @@ export const useLenisScroll = () => {
 
     // Initialize Lenis with optimized settings for smooth scrolling
     const lenis = new Lenis({
-      duration: 4,
+      duration: .3,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',

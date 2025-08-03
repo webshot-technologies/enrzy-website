@@ -28,10 +28,9 @@ const Index = () => {
   return (
     <>
       <Header/>
-     {/* <HeroBanner/> */}
-      <VideoSection/>
-     
-     <HeroSection/>
+     <HeroBanner/>
+      {/* <VideoSection/> */}
+     {/* <VideoSection /> */}
       {/* <HeroSection  /> */}
    {/* <VideoScrollScaler/> */}
       <FeaturesSection />

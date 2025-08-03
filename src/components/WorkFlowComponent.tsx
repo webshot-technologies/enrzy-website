@@ -264,7 +264,6 @@ if (mobileTimeline) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: stepContainer,
-          start: 'top 80%',
           end: 'bottom 20%',
           toggleActions: 'play none none reverse'
         }
@@ -374,7 +373,7 @@ if (mobileTimeline) {
       ease: 'power2.out',
       scrollTrigger: {
         trigger: container,
-        start: 'top 90%',
+        start: 'top 100%',
         once: true
       }
     });

@@ -78,14 +78,31 @@ const VideoBackgroundTransition: React.FC = () => {
         className="relative flex justify-center items-center h-screen overflow-hidden"
         style={{ zIndex: 10 }}
       >
+        
         <div
           ref={bgImageRef}
           className="absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none"
           style={{
-            backgroundImage: "url('/assets/bg-transparent.png')",
+            backgroundImage: "url('/assets/bg-background.png')",
             zIndex: 10,
           }}
         />
+
+          <div className="text-center banner-content  max-w-4xl mx-auto -mt-10 ">
+          <h1 className="text-4xl banner-header md:text-8xl lg:text-8xl font-bold leading-tight">
+            <span className="hero-title-line block">Revolutionize</span>
+            <span className="hero-title-line block base-color">
+              Power <span className=" base-color"> Prospects</span>
+            </span>
+            <span className="hero-title-line block ">
+              Asset <span className="base-color">Management</span>
+            </span>
+          </h1>
+
+          <p className="hero-subtitle  mt-6 max-w-2xl text-md md:text-xl lg:text-xl  mx-auto leading-relaxed mb-6">
+            ENRZY Empowers Utilities To Detect Faults Early, Automate Maintenance, And Visualize Every Asset In 3D — Ensuring Higher Uptime, Lower Risk, And Smarter Decisions.
+          </p>
+        </div>
         <div
           ref={videoWrapperRef}
           className="absolute inset-0 overflow-hidden"

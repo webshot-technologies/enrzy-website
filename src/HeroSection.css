@@ -99,7 +99,7 @@
   width: 100%;
   height: 100%;
   z-index: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .banner-video {
@@ -108,6 +108,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: #F38D26 ;
 }
 
 .banner-video video {
@@ -119,6 +120,7 @@
   min-height: 100%;
   width: auto;
   height: auto;
+
 }
 
 /* Hide mobile video by default on desktop */
@@ -131,6 +133,16 @@
   .banner-head {
     font-size: 56px;
   }
+
+  .home-container{
+    height: ;
+  }
+        .home-banner-wrap{
+          height: ;
+        }
+          .home-banner{
+            height: ;
+          }
 }
 
 @media (max-width: 768px) {
