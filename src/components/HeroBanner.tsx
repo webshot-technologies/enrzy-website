@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import '../App.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,7 +78,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
   }
  });
  mobileScrollTl
- .to(bgImageRef.current, { scale: 20, autoAlpha: 0, zIndex: 0, duration: 0.8, ease: "power2.inOut" })
+ .to(bgImageRef.current, { scale: 20, autoAlpha: 0, zIndex: 0, duration: 4, opacity: 0 ,ease: "power2.inOut" })
  .to([headingLines, textRef.current], { y: -100, autoAlpha: 0, stagger: 0.1, duration: 0.5 }, 0)
  .to(videoRef.current, { opacity: 1, duration: 2, ease: "sine.inOut" }, "-=0.2");
  });
@@ -95,14 +96,16 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
   ref={bgImageRef}
   className="absolute inset-0 z-0 bg-cover bg-center"
   style={{
-   backgroundImage: `url(${window.innerWidth <= 991 ? 'https://aereo.io/wp-content/themes/Aereo/assets/img/mob-white-bg.png' : 'https://aereo.io/wp-content/themes/Aereo/assets/img/home-white-bg.svg'})`,
+   backgroundImage: `url(${window.innerWidth <= 991 ? '/assets/mobile_bg.png' : '/assets/desktop_bg.png'})`,
    opacity: 1,
-   transformOrigin: '90% 65%'
+   transformOrigin:`${window.innerWidth <= 991 ? '50% 100%' : '90% 65%'}`,
   }}
  />
+
+ 
  
  {/* Video */}
- <div className='bg-black
+ <div className='bg-black 
  '>
   <video
    ref={videoRef}
@@ -125,8 +128,8 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
    className="relative z-20 h-full flex items-start banner-content-margin md:items-center pl-0 md:pl-16 lg:pl-24"
    style={{ width: window.innerWidth <= 991 ? '100%' : '50%' }}
   >
-   <div className="max-w-md">
-    <h1 ref={headingRef} className="text-4xl md:text-5xl font-bold mb-6">
+   <div className="max-w-md content-text-margin">
+    <h1 ref={headingRef} className="text-4xl md:text-5xl font-bold mb-6 text-center md:text-start">
   <span className="hero-title-line block">Revolutionize</span>
   <span className="hero-title-line block base-color">
    Power <span className="base-color">Prospects</span>
@@ -135,7 +138,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
    Asset <span className="base-color">Management</span>
   </span>
   </h1>
-  <p ref={textRef} className="hero-subtitle text-lg md:text-xl mb-8">
+  <p ref={textRef} className="hero-subtitle text-lg md:text-xl mb-8 md:text-start text-center">
    ENRZY empowers utilities to detect faults early, automate maintenance, and visualize every asset in 3D — ensuring higher uptime, lower risk, and smarter decisions.
   </p>
    </div>

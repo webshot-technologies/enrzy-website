@@ -43,17 +43,17 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
           <div className=" items-center space-y-3 ">
             <a href="tel:+911254567890" className="flex items-center text-center md:text-left justify-center md:justify-start  text-base-secondary hover:text-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 mr-2 base-color" />
-              <span>+91 8448020706</span>
+              <span className='text-sm '>+91 8448020706</span>
               
             </a>
             <a href="tel:+911254567890" className="flex items-center text-center md:text-left justify-center md:justify-start text-base-secondary hover:text-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 mr-2 base-color" />
              
-              <span>+91 7838525424</span>
+              <span className='text-sm '>+91 7838525424</span>
             </a>
             <a href="mailto:hello@betterdrones.com" className="flex  text-center md:text-left justify-center md:justify-start items-center text-base-secondary hover:text-orange-500 transition-colors duration-300 ml-0">
               <Mail className="w-5 h-5 mr-2 base-color" />
-              <span>info@enrzy.io</span>
+              <span className='text-sm '>info@enrzy.io</span>
             </a>
           </div>
           </div>
