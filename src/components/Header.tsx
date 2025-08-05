@@ -26,7 +26,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="max-w-6xl mx-auto py-6 px-4 md:px-0  flex items-center justify-between ">
+    <header className="max-w-7xl mx-auto py-6 px-4 md:px-0  flex items-center justify-between ">
       {/* Logo Section */}
       <div ref={logoRef} className="flex items-center space-x-2">
         <img

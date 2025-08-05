@@ -197,7 +197,11 @@ letter-spacing: 0%;
   font-size: 20px;
   font-weight: bold;
 }
+.content-text-margin{
+   
+  margin-left: 55px;
 
+}
 .why-image{
   margin-bottom: 80px;
 }
@@ -258,7 +262,18 @@ img.svg-icon{
 @media only screen and (max-width: 768px)  {
   .counter-grid{
   padding: 150px 24px;
+
   
+}
+.hero-subtitle{
+  width: 80%;
+  margin-inline:auto;
+  font-size: 18px;
+}
+.content-text-margin{
+   
+  margin-left: 0px;
+
 }
 img.svg-icon{
   height: 22px !important;    
@@ -290,6 +305,7 @@ height: 39.66666793823242;
 .banner-content-margin{
   margin-top: 100px;
 }
+
 .counter-grid{
   padding: 150px 24px;
 }
